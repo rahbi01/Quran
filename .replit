@@ -1,0 +1,20 @@
+run = "pkill -f 'node server' 2>/dev/null; sleep 1; npm install && npm run build && node server.js"
+
+[nix]
+channel = "stable-24_05"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[[ports]]
+localPort = 3001
+externalPort = 3001
+
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["sh", "-c", "npm install && npm run build"]
+run = ["sh", "-c", "node server.js"]
+
+[agent]
+expertMode = true
